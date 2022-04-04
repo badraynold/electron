@@ -1,3 +1,6 @@
+const path = require("path");
+const os = require("os");
+
 const {
   app,
   BrowserWindow,
@@ -5,6 +8,12 @@ const {
   globalShortcut,
   ipcMain,
 } = require("electron");
+const imagemin = require("imagemin");
+const imageminJpegtran = require("imagemin-mozjpeg");
+const imageminPngquant = require("imagemin-pngquant");
+
+const slash = require("slash");
+
 process.env.NODE_ENV = "development";
 const isDev = process.env.NODE_ENV !== "production" ? true : false;
 console.log(process.platform);
