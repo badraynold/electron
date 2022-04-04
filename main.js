@@ -33,10 +33,7 @@ app.on("ready", () => {
 
 const menu = [
   {
-    label: "File",
-    submenu: [
-      { label: "Quit", accelerator: "CmdOrCtrl+W", click: () => app.quit() },
-    ],
+    role: "fileMenu",
   },
 ];
 
