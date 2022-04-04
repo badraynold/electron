@@ -7,9 +7,10 @@ const {
   Menu,
   globalShortcut,
   ipcMain,
+  shell,
 } = require("electron");
 const imagemin = require("imagemin");
-const imageminJpegtran = require("imagemin-mozjpeg");
+const imageminMozjpeg = require("imagemin-mozjpeg");
 const imageminPngquant = require("imagemin-pngquant");
 
 const slash = require("slash");
@@ -76,7 +77,8 @@ const menu = [
 ];
 
 ipcMain.on("image:minimize", (e, options) => {
-  console.log(options);
+  options.dest = path.join(os.homedir(), "imageshrink");
+  shringImage(options);
 });
 
 app.on("window-all-closed", () => {
@@ -84,3 +86,24 @@ app.on("window-all-closed", () => {
 });
 
 console.log("Hello!");
+
+const shringImage = async ({ imgPath, quality, dest }) => {
+  try {
+    const files = await imagemin([slash(imgPath)], {
+      destination: dest,
+      plugins: [
+        imageminMozjpeg({
+          quality,
+        }),
+        imageminPngquant({
+          quality: [quality / 100, quality / 100],
+        }),
+      ],
+    });
+    console.log(files);
+    // shell.openItem(dest);
+    shell.openPath(dest);
+  } catch (err) {
+    console.log(err);
+  }
+};
