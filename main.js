@@ -1,4 +1,10 @@
-const { app, BrowserWindow, Menu, globalShortcut } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  Menu,
+  globalShortcut,
+  ipcMain,
+} = require("electron");
 process.env.NODE_ENV = "development";
 const isDev = process.env.NODE_ENV !== "production" ? true : false;
 console.log(process.platform);
@@ -59,6 +65,10 @@ const menu = [
     role: "fileMenu",
   },
 ];
+
+ipcMain.on("image:minimize", (e, options) => {
+  console.log(options);
+});
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
