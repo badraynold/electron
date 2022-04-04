@@ -3,6 +3,8 @@ process.env.NODE_ENV = "development";
 const isDev = process.env.NODE_ENV !== "production" ? true : false;
 console.log(process.platform);
 let mainWindow;
+let aboutWindow;
+
 function createWindow() {
   mainWindow = new BrowserWindow({
     title: "ImageShrink",
@@ -12,9 +14,19 @@ function createWindow() {
     resizable: false,
     backgroundColor: "white",
   });
-  //   mainWindow.loadURL("https://generator-paskow.pl");
-  //   mainWindow.loadURL(`file://${__dirname}/app/index.html`);
   mainWindow.loadFile("./app/index.html");
+}
+
+function createAboutWindow() {
+  aboutWindow = new BrowserWindow({
+    title: "About ImageShrink",
+    width: 300,
+    height: 300,
+    icon: `{$__dirname}/assets/icons/Icon_256x256.png`,
+    resizable: false,
+    backgroundColor: "white",
+  });
+  aboutWindow.loadFile("./app/about.html");
 }
 
 app.on("ready", () => {
@@ -32,6 +44,10 @@ app.on("ready", () => {
 });
 
 const menu = [
+  {
+    label: "test",
+    click: createAboutWindow,
+  },
   {
     role: "fileMenu",
   },
