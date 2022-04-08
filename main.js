@@ -1,5 +1,6 @@
 const path = require("path");
 const os = require("os");
+const log = require("electron-log");
 
 const {
   app,
@@ -100,12 +101,10 @@ const shringImage = async ({ imgPath, quality, dest }) => {
         }),
       ],
     });
-    console.log(files);
-    // shell.openItem(dest);
+    log.info(files);
     shell.openPath(dest);
-    console.log("sending: image:done");
     mainWindow.webContents.send("image:done");
   } catch (err) {
-    console.log(err);
+    log.error(err);
   }
 };
