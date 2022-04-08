@@ -103,6 +103,8 @@ const shringImage = async ({ imgPath, quality, dest }) => {
     console.log(files);
     // shell.openItem(dest);
     shell.openPath(dest);
+    console.log("sending: image:done");
+    mainWindow.webContents.send("image:done");
   } catch (err) {
     console.log(err);
   }
